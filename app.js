@@ -44,7 +44,7 @@ app.use((req, res, next) => {
 seedDb();
 //mongoose.connect('mongodb://localhost/yelp_camp');
 mongoose.connect(
-  'mongodb://<dbuser>:<dbpassword>@ds215019.mlab.com:15019/yelpcamp_prod'
+  'mongodb://brady:abc123@ds215019.mlab.com:15019/yelpcamp_prod'
 );
 
 // ***** ROUTES
