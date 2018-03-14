@@ -1,0 +1,28 @@
+body {
+  font-size: 16px;
+}
+
+.all-forms h1 {
+  text-align: center;
+}
+
+.form-wrapper {
+  margin: 1.5rem auto;
+  width: 30%;
+}
+
+.delete-form {
+  display: inline;
+}
+
+.thumbnail {
+  padding: 0;
+}
+
+.thumbnail img {
+  width: 100%;
+}
+
+.campground-show .thumbnail img {
+  height: 25em;
+}
