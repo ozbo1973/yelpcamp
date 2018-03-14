@@ -8,6 +8,7 @@ const express = require('express'),
   { Campground, Comment, User } = require('./models'),
   seedDb = require('./seed'),
   app = express(),
+  dbURL = process.env.DATABASEURL || 'mongodb://localhost/yelp_camp',
   PORT = process.env.PORT || 3000;
 
 //****APP CONFIG
@@ -43,9 +44,7 @@ app.use((req, res, next) => {
 //**** DATABASE
 seedDb();
 //mongoose.connect('mongodb://localhost/yelp_camp');
-mongoose.connect(
-  'mongodb://brady:abc123@ds215019.mlab.com:15019/yelpcamp_prod'
-);
+mongoose.connect(dbURL);
 
 // ***** ROUTES
 app.get('/', (req, res) => {
