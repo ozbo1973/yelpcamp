@@ -8,7 +8,7 @@ const express = require('express'),
   { Campground, Comment, User } = require('./models'),
   seedDb = require('./seed'),
   app = express(),
-  port = 3000;
+  PORT = process.env.PORT || 3000;
 
 //****APP CONFIG
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -59,6 +59,6 @@ app.get('*', (req, res) => {
 });
 
 //PORT SUCCESS
-app.listen(port, () => {
-  console.log(`Server listening on port: ${port}`);
+app.listen(PORT, () => {
+  console.log(`Server listening on port: ${PORT}`);
 });
