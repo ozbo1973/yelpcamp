@@ -42,8 +42,7 @@ app.use((req, res, next) => {
 });
 
 //**** DATABASE
-seedDb();
-//mongoose.connect('mongodb://localhost/yelp_camp');
+//seedDb();
 mongoose.connect(dbURL);
 
 // ***** ROUTES
