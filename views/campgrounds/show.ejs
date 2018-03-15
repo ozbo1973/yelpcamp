@@ -21,7 +21,7 @@
           </h4>
           <p><%= campground.description %></p>
           <p>
-            <em>submitted by: <%= campground.author.username %></em>
+            <em>submitted by: <%= campground.author.username %>, <%= moment(campground.createdAt).fromNow() %></em>
           </p>
 
           <% if(currentUser && campground.author.id.equals(currentUser._id)) { %>
@@ -40,11 +40,12 @@
         <div class="text-right">
           <a class="btn btn-success" href="/campgrounds/<%= campground._id %>/comments/new">Add New Comment</a>
         </div>
+        <hr>
         <% campground.comments.forEach(comment=>{ %>
           <div class="row">
             <div class="col-md-12">
-              <%= comment.author.username %>
-              <span class="text-right">10 days ago</span>
+              <strong><%= comment.author.username %></strong>
+              <span class="pull-right"><%=moment(comment.createdAt).fromNow()%></span>
               <p><%= comment.text %></p>
             <!-- edit and delete buttons -->
             <% if(currentUser && comment.author.id.equals(currentUser._id)) { %>

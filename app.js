@@ -16,6 +16,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/public'));
 app.use(overrideMethod('_method'));
 app.set('view engine', 'ejs');
+app.locals.moment = require('moment');
 
 //**** PASSPORT
 app.use(
@@ -42,7 +43,7 @@ app.use((req, res, next) => {
 });
 
 //**** DATABASE
-//seedDb();
+seedDb();
 mongoose.connect(dbURL);
 
 // ***** ROUTES
