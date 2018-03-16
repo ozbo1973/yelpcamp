@@ -43,7 +43,9 @@ app.use((req, res, next) => {
 });
 
 //**** DATABASE
-seedDb();
+if (process.env.NODE_ENV !== 'production') {
+  seedDb();
+}
 mongoose.connect(dbURL);
 
 // ***** ROUTES

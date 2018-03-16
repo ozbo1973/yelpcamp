@@ -6,7 +6,7 @@ module.exports = (req, res, next) => {
       req.flash('error', err.message);
       return res.redirect('back');
     }
-    if (!found.author.id.equals(req.user._id)) {
+    if (!found.author.id.equals(req.user._id) && !req.user.isAdmin) {
       req.flash('error', 'Permission denied, you are not the author!');
       return res.redirect('back');
     }
