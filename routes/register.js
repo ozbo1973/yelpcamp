@@ -1,6 +1,6 @@
 const passport = require('passport'),
   { User } = require('../models'),
-  { router, isLoggedIn } = require('../middleware');
+  { router } = require('../middleware');
 
 //root vars
 const r = router('register', 'campgrounds');
@@ -27,26 +27,6 @@ module.exports = app => {
         res.redirect(r.home);
       });
     });
-  });
-
-  //EDIT PROFILE
-  app.get('/profile/:id', isLoggedIn, (req, res) => {
-    res.render(r.name + '/profile');
-  });
-
-  //UPDATE Profile
-  app.put('/profile/:id', isLoggedIn, (req, res) => {
-    User.findByIdAndUpdate(
-      req.params.id,
-      req.body.userInfo,
-      (err, foundUser) => {
-        if (err || !foundUser) {
-          req.flash('error', 'User not found');
-        }
-        req.flash('success', 'Profile Updated');
-        res.redirect('/campgrounds');
-      }
-    );
   });
 
   app.get('/login', (req, res) => {

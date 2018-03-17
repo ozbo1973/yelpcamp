@@ -55,6 +55,7 @@ app.get('/', (req, res) => {
 require('./routes/campgrounds')(app);
 require('./routes/comments')(app);
 require('./routes/register')(app);
+require('./routes/profile')(app);
 app.get('*', (req, res) => {
   res.render('landing');
 });

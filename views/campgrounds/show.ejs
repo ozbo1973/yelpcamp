@@ -21,7 +21,7 @@
           </h4>
           <p><%= campground.description %></p>
           <p>
-            <em>submitted by: <%= campground.author.username %>, <%= moment(campground.createdAt).fromNow() %></em>
+            <em>submitted by: <a href="/profile/<%=campground.author.id%>"><%= campground.author.username %></a>, <%= moment(campground.createdAt).fromNow() %></em>
           </p>
 
           <% if(currentUser && campground.author.id.equals(currentUser._id) || currentUser && currentUser.isAdmin) { %>
