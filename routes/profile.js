@@ -3,7 +3,6 @@ const passport = require('passport'),
   { router, isLoggedIn } = require('../middleware');
 
 const r = router('profile', 'campgrounds');
-let msg = '';
 
 //Show Profile(public)
 module.exports = app => {
@@ -35,7 +34,7 @@ module.exports = app => {
     const actionUrl = r.route + '/' + req.user._id + '?_method=PUT';
     User.findById(req.user._id, (err, foundUser) => {
       if (err || !foundUser) {
-        err ? (msg = msg_error(err.message)) : msg_error('User not found');
+        err ? req.flash('error',err.message) : req.flash('User not found');
         res.render(r.viewShow);
       }
       res.render(r.viewEdit, { actionUrl });
@@ -53,7 +52,7 @@ module.exports = app => {
           res.redirect('back');
         }
         //req.flash('success', 'Profile Updated');
-        msg = msg_success('Profile Update');
+        req.flash('success',"Profile has been updated.")
         res.redirect(r.home);
       }
     );
