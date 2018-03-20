@@ -55,7 +55,15 @@ app.get("/", (req, res) => {
 require("./routes/campgrounds")(app);
 require("./routes/comments")(app);
 require("./routes/register")(app);
+require("./routes/login")(app);
 require("./routes/profile")(app);
+
+app.get("/logout", (req, res) => {
+  req.logout();
+  req.flash("success", "Logged you out");
+  res.redirect("/");
+});
+
 app.get("*", (req, res) => {
   res.render("landing");
 });

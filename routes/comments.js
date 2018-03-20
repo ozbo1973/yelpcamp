@@ -1,5 +1,4 @@
-const Campground = require('../models/campSchema'),
-  Comment = require('../models/commentSchema'),
+const {Campground,Comment} = require('../models'),
   { isLoggedIn, commentOwner, router } = require('../middleware');
 
 //root vars
@@ -7,18 +6,18 @@ const r = router('comments', 'campgrounds');
 
 module.exports = app => {
   //NEW COMMENT
-  app.get(r.home + '/:id' + r.route + '/new', isLoggedIn, (req, res) => {
+  app.get(r.homeDirID + r.rt('new'), isLoggedIn, (req, res) => {
     Campground.findById(req.params.id, (err, camp) => {
       if (err || !camp) {
         req.flash('error', 'Campground not found');
         return res.redirect('back');
       }
-      res.render(r.name + '/new', { camp });
+      res.render(r.view('new'), { camp });
     });
   });
 
   //CREATE COMMENTS
-  app.post(r.home + '/:id' + r.route, isLoggedIn, (req, res) => {
+  app.post(r.homeDirID + r.rt('create'), isLoggedIn, (req, res) => {
     //lookup campground id
     Campground.findById(req.params.id, (err, camp) => {
       if (err || !camp) {
@@ -41,7 +40,7 @@ module.exports = app => {
             return res.redirect('back');
           }
           //redirect to campground
-          res.redirect(r.home + '/' + camp._id);
+          res.redirect(r.redirectHome(camp._id));
         });
       });
     });
@@ -49,7 +48,7 @@ module.exports = app => {
 
   //EDIT comment
   app.get(
-    r.home + '/:id' + r.route + '/:comment_id/edit',
+    r.homeDirID + r.rt('edit','comment_id'),
     commentOwner,
     (req, res) => {
       Campground.findById(req.params.id, (err, campFound) => {
@@ -63,7 +62,7 @@ module.exports = app => {
             req.flash('error', 'Comment not found.');
             return res.redirect('back');
           }
-          res.render(r.name + '/edit', { campId: req.params.id, commentFound });
+          res.render(r.view('edit'), { campId: req.params.id, commentFound });
         });
       });
     }
@@ -71,7 +70,7 @@ module.exports = app => {
 
   //UPDATE comment
   app.put(
-    r.home + '/:id' + r.route + '/:comment_id',
+    r.homeDirID + r.rt('show','comment_id'),isLoggedIn,
     commentOwner,
     (req, res) => {
       //find and UPDATE
@@ -84,15 +83,15 @@ module.exports = app => {
             return res.redirect('back');
           }
           req.flash('success', 'Comment has been updated.');
-          res.redirect(r.home + '/' + req.params.id);
+          res.redirect(r.redirectHome(req.params.id));
         }
       );
     }
   );
 
-  //Delete comment
+  //Delete commen
   app.delete(
-    r.home + '/:id' + r.route + '/:comment_id',
+    r.homeDirID + r.rt('show','comment_id'),isLoggedIn,
     commentOwner,
     (req, res) => {
       Comment.findByIdAndRemove(req.params.comment_id, err => {
@@ -101,7 +100,7 @@ module.exports = app => {
           return res.redirect('back');
         }
         req.flash('success', 'Comment has been deleted.');
-        res.redirect(r.home + '/' + req.params.id);
+        res.redirect(r.redirectHome(req.params.id));
       });
     }
   );
